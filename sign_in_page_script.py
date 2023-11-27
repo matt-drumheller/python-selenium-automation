@@ -10,7 +10,7 @@ driver_path = ChromeDriverManager().install()
 # create a new Chrome browser instance
 service = Service(driver_path)
 driver = webdriver.Chrome(service=service)
-driver.maximize_window()
+#driver.maximize_window()
 
 #Test Case: Logged out user sees Sign in page when clicking Orders
 
@@ -21,16 +21,13 @@ driver.get('https://www.amazon.com')
 driver.find_element(By.ID, 'nav-orders').click()
 
 #Verify Sign in page opens
-expected_result = driver.find_element(By.XPATH, "//h1[@class='a-spacing-small']")
-actual_result = driver.find_element(By.XPATH, "//h1[@class='a-spacing-small']")
+expected_result = 'Sign in'
+actual_result = driver.find_element(By.XPATH, "//h1[@class='a-spacing-small']").text
 
-assert expected_result == actual_result, "Error, Sign in header not present"
+assert expected_result == actual_result, f'Expected {expected_result} but got {actual_result}'
 
-expected_result_2 = driver.find_element(By.ID, 'ap_email')
-actual_result_2 = driver.find_element(By.ID, 'ap_email')
-
-assert expected_result_2 == actual_result_2, "Error, test case failed. Email field not present"
-print("Test case passed.")
+#Verify email field present
+driver.find_element(By.ID, 'ap_email')
 
 
 
