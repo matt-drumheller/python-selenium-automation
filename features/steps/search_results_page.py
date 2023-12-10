@@ -2,17 +2,6 @@ from selenium.webdriver.common.by import By
 from behave import given, when, then
 from time import sleep
 
-@given('Open target main page')
-def open_target(context):
-    context.driver.get('https://www.target.com/')
-
-
-@when('Search for {product}')
-def search_product(context, product):
-    context.driver.find_element(By.ID, 'search').send_keys(product)
-    context.driver.find_element(By.CSS_SELECTOR, "[data-test='@web/Search/SearchButton']").click()
-    sleep(6)  # wait for ads to disappear
-
 
 @then('Verify search worked for {search_result}')
 def verify_search(context, search_result):
