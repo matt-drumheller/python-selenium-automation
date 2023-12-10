@@ -6,11 +6,17 @@ SEARCH_FIELD = (By.ID, 'search')
 SEARCH_BTN = (By.CSS_SELECTOR, "[data-test='@web/Search/SearchButton']")
 HEADER = (By.CSS_SELECTOR, "[class*=UtilityHeaderWrapper]")
 HEADER_LINKS = (By.CSS_SELECTOR, "[data-test*='@web/GlobalHeader/UtilityHeader/']")
+CART_ICON = (By.CSS_SELECTOR, "[data-test='@web/CartLink']")
 
 
 @given('Open target main page')
 def open_target(context):
     context.driver.get('https://www.target.com/')
+
+
+@when('Click on Target Circle on top header')
+def open_target_circle(context):
+    context.driver.find_element(By.ID, 'utilityNav-circle').click()
 
 
 @when('Search for {product}')
@@ -21,7 +27,7 @@ def search_product(context, product):
 
 @when('Click on cart icon')
 def cart_icon(context):
-    context.driver.find_element(By.CSS_SELECTOR, "[href*='/Cart.svg#Cart']").click()
+    context.driver.find_element(*CART_ICON).click()
 
 
 @then("Verify 'Your cart is empty' message is shown")

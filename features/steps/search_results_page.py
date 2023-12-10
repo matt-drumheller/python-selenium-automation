@@ -2,6 +2,8 @@ from selenium.webdriver.common.by import By
 from behave import given, when, then
 from time import sleep
 
+ADD_TO_CART = (By.ID, 'addToCartButtonOrTextIdFor53740849')
+POP_UP_WINDOW = (By.CSS_SELECTOR, "[class*='styles__StyledButton-sc']")
 
 @then('Verify search worked for {search_result}')
 def verify_search(context, search_result):
@@ -13,3 +15,15 @@ def verify_search(context, search_result):
 def verify_search_url(context, expected_keyword):
     assert expected_keyword in context.driver.current_url, \
         f'Expected {expected_keyword} not in {context.driver.current_url}'
+
+
+@when('Add item to cart')
+def add_to_cart(context):
+    context.driver.find_element(*ADD_TO_CART).click()
+
+@when('CLose pop up window')
+def pop_up_window(context):
+    context.driver.find_element(*POP_UP_WINDOW).click()
+
+
+
