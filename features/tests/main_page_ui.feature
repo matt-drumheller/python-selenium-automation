@@ -13,3 +13,5 @@ Feature: Main page UI tests
     And Close pop up window
     And Click on cart icon
     Then Verify there is an item added to cart
+
+

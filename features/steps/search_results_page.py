@@ -6,13 +6,11 @@ from time import sleep
 ADD_TO_CART_BTN = (By.CSS_SELECTOR, "[data-test*='addToCartButton']")
 POP_UP_WINDOW = (By.CSS_SELECTOR, "[class*='styles__StyledButton-sc']")
 SIDE_NAV_PRODUCT_NAME = (By.CSS_SELECTOR, "h4[class*='StyledHeading']")
-SEARCH_RESULT_TXT = (By.CSS_SELECTOR, "[data-test='resultsHeading']")
 
 
 @then('Verify {expected_keyword} in search result url')
 def verify_search_url(context, expected_keyword):
-    assert expected_keyword in context.driver.current_url, \
-        f'Expected {expected_keyword} not in {context.driver.current_url}'
+    context.app.search_results_page.verify_search_url(expected_keyword)
 
 
 @when('Add item to cart')
@@ -39,7 +37,6 @@ def store_product_name(context):
 
 @then('Verify search worked for {product}')
 def verify_search(context, product):
-    search_results_header = context.driver.find_element(*SEARCH_RESULT_TXT).text
-    assert product in search_results_header, f'Expected text {product} not in {search_results_header}'
+    context.app.search_results_page.verify_search(product)
 
 

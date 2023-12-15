@@ -2,16 +2,16 @@ from selenium.webdriver.common.by import By
 from behave import given, when, then
 from time import sleep
 
-SEARCH_FIELD = (By.ID, 'search')
-SEARCH_BTN = (By.CSS_SELECTOR, "[data-test='@web/Search/SearchButton']")
+
 HEADER = (By.CSS_SELECTOR, "[class*=UtilityHeaderWrapper]")
 HEADER_LINKS = (By.CSS_SELECTOR, "[data-test*='@web/GlobalHeader/UtilityHeader/']")
 CART_ICON = (By.CSS_SELECTOR, "[data-test='@web/CartLink']")
+CART_MESSAGE = (By.CSS_SELECTOR, ".styles__StyledRow-sc-wmoju4-0 .styles__StyledHeading-sc-1xmf98v-0")
 
 
 @given('Open target main page')
 def open_target(context):
-    context.driver.get('https://www.target.com/')
+    context.app.main_page.open_main()
 
 
 @when('Click on Target Circle on top header')
@@ -21,21 +21,16 @@ def open_target_circle(context):
 
 @when('Search for {product}')
 def search_product(context, product):
-    context.driver.find_element(*SEARCH_FIELD).send_keys(product)
-    context.driver.find_element(*SEARCH_BTN).click()
-    sleep(6)  # wait for ads to disappear
+    context.app.main_page.search(product)
 
 @when('Click on cart icon')
 def cart_icon(context):
-    context.driver.find_element(*CART_ICON).click()
+    context.app.main_page.cart_icon()
 
 
 @then("Verify 'Your cart is empty' message is shown")
 def empty_cart(context):
-    actual_message = context.driver.find_element(By.CSS_SELECTOR, ".styles__StyledRow-sc-wmoju4-0 .styles__StyledHeading-sc-1xmf98v-0").text
-    expected_message = 'Your cart is empty'
-    assert actual_message == expected_message, f'Expected {expected_message} but got {actual_message}'
-
+    context.app.cart_page.empty_cart()
 
 @when("Click Sign In")
 def sign_in(context):

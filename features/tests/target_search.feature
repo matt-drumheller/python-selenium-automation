@@ -46,3 +46,9 @@ Feature: Search tests
     And Click on cart icon
     Then Verify there is an item added to cart
     And Verify cart has the correct product
+
+  Scenario: Verify that user can see product names and images
+    Given Open target main page
+    When Search for AirPods (3rd Generation)
+    Then Verify that every product has a name and an image
+

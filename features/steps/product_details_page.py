@@ -6,6 +6,9 @@ from time import sleep
 COLOR_OPTIONS = (By.CSS_SELECTOR, "[class*='ButtonWrapper'] img")
 SELECTED_COLOR = (By.CSS_SELECTOR, "[class*='StyledVariationSelectorImage'] [class*='CellVariationHeaderWrapper']")
 SIZE_OPTION = (By.CSS_SELECTOR, '[class*="styles__ButtonWrapper-sc"] [value="S"]')
+LISTINGS = (By.CSS_SELECTOR, "[data-test='@web/site-top-of-funnel/ProductCardWrapper']")
+PRODUCT_TITLE = (By.CSS_SELECTOR, "[data-test='product-title']")
+PRODUCT_IMG = (By.CSS_SELECTOR, "[class*='ProductCardImage']")
 
 
 @given('Open target product {product_id} page')
@@ -44,3 +47,16 @@ def click_and_verify_colors(context):
         actual_colors.append(selected_color)
 
     assert expected_colors == actual_colors, f'Expected {expected_colors} did not match actual {actual_colors}'
+
+@then('Verify that every product has a name and an image')
+def verify_products_name_img(context):
+    context.driver.execute_script("window.scrollBy(0,2000)", "")
+    sleep(2)
+    context.driver.execute_script("window.scrollBy(0,2000)", "")
+
+    all_products = context.driver.find_elements(*LISTINGS)
+    for product in all_products:
+        title = product.find_element(*PRODUCT_TITLE).text
+        print(title)
+        assert title, 'Product title not shown'
+        product.find_element(*PRODUCT_IMG)
